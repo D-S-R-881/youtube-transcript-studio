@@ -1,0 +1,41 @@
+# Render Blueprint for the backend API (free Docker web service).
+# Render → New → Blueprint → select this repo. You'll be prompted for the
+# `sync: false` values. The frontend is deployed separately on Vercel.
+services:
+  - type: web
+    name: youtube-transcript-studio-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /api/health
+    autoDeploy: true
+    buildFilter:
+      paths:
+        - backend/**
+    envVars:
+      # Your Vercel production URL, e.g. https://youtube-transcript-studio.vercel.app
+      - key: CORS_ORIGINS
+        sync: false
+      # Optional: allow this project's Vercel preview URLs, e.g.
+      # ^https://youtube-transcript-studio-[a-z0-9]+-your-team\.vercel\.app$
+      - key: CORS_ORIGIN_REGEX
+        sync: false
+      # Render's proxy sets X-Forwarded-For; needed for per-user rate limits.
+      - key: TRUST_PROXY_HEADERS
+        value: "true"
+      # Speech-to-text is not installed in the default image (512 MB free tier).
+      - key: STT_ENABLED
+        value: "false"
+      - key: ENABLE_YOUTUBE_AUDIO_INGESTION
+        value: "false"
+      - key: MAX_UPLOAD_MB
+        value: "100"
+      # Optional, recommended on cloud hosts (see README): residential proxy for captions.
+      - key: CAPTIONS_PROXY_HTTP
+        sync: false
+      - key: CAPTIONS_PROXY_HTTPS
+        sync: false
+      # Optional YouTube Data API v3 key for more reliable metadata.
+      - key: YOUTUBE_API_KEY
+        sync: false

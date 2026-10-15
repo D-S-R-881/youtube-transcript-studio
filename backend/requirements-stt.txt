@@ -1,0 +1,8 @@
+# Optional speech-to-text stack.
+# Install only if you intend to transcribe audio (uploaded files, or YouTube
+# audio when ENABLE_YOUTUBE_AUDIO_INGESTION=true). FFmpeg must also be on PATH
+# (or set FFMPEG_PATH) for YouTube audio / live audio processing.
+-r requirements.txt
+faster-whisper>=1.0,<2.0
+numpy>=1.24
+yt-dlp>=2024.10.0

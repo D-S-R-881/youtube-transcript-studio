@@ -1,0 +1,42 @@
+# Secrets / local env (keep the committed examples)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+coverage/
+.vercel/
+*.tsbuildinfo
+next-env.d.ts
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Render / local tooling
+.render/
+.tools/
+
+# Logs, OS, editors
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

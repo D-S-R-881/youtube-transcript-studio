@@ -1,0 +1,28 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      args:
+        # Set to "true" to include Faster-Whisper + yt-dlp + FFmpeg (large image).
+        INSTALL_STT: "false"
+    env_file:
+      - ./backend/.env
+    environment:
+      CORS_ORIGINS: http://localhost:3000
+    ports:
+      - "8000:8000"
+    tmpfs:
+      - /tmp
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Browser-facing URL of the backend.
+        NEXT_PUBLIC_API_BASE_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
